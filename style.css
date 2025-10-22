@@ -1,4 +1,21 @@
-/* ===== ROOT VARIABLES & RESET ===== */
+/**
+ * UPSC Quiz Generator - Stylesheet
+ *
+ * This file contains all the styles for the UPSC Quiz Generator application.
+ * The styles are organized into the following sections:
+ *
+ * 1.  Global Styles & Variables: Basic resets, typography, and color variables.
+ * 2.  Theme Management: Styles for the light/dark mode toggle and theme-specific overrides.
+ * 3.  Layout & Containers: Main layout containers and responsiveness.
+ * 4.  Component Styles: Reusable components like buttons, cards, and forms.
+ * 5.  Page-Specific Styles: Styles for the Index, Quiz, and Result pages.
+ * 6.  Animations & Effects: Keyframe animations and transition effects.
+ * 7.  Utility Classes: Helper classes for spacing, alignment, etc.
+ */
+
+/* ==========================================================================
+   1. Global Styles & Variables
+   ========================================================================== */
 :root {
     --bg-light: #ffffff;
     --text-light: #000000;
@@ -8,6 +25,10 @@
     --gray-dark: #1a1a1a;
     --border-light: #e0e0e0;
     --border-dark: #333333;
+    --primary-accent: #007bff;
+    --success-green: #28a745;
+    --danger-red: #dc3545;
+    --warning-yellow: #ffc107;
 }
 
 * {
@@ -24,545 +45,183 @@ body {
     line-height: 1.6;
 }
 
-/* ===== DARK MODE ===== */
+/* ==========================================================================
+   2. Theme Management
+   ========================================================================== */
 body.dark-mode {
     background-color: var(--bg-dark);
     color: var(--text-dark);
 }
 
-body.dark-mode .upload-area,
-body.dark-mode .question-card,
-body.dark-mode .timer-box,
-body.dark-mode .summary-box,
-body.dark-mode .score-card,
-body.dark-mode .stat-item,
-body.dark-mode .review-section {
-    background-color: var(--gray-dark);
-    border-color: var(--border-dark);
-}
-
-body.dark-mode .btn-secondary {
-    background-color: var(--gray-dark);
-    border-color: var(--border-dark);
-}
-
-body.dark-mode .ad-container {
-    background-color: var(--gray-dark);
-    border-color: var(--border-dark);
-}
-
-/* ===== THEME TOGGLE ===== */
 .theme-toggle {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1000;
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
-.theme-icon {
-    font-size: 20px;
+/* Add more specific dark-mode overrides here */
+body.dark-mode .upload-area {
+    background-color: var(--gray-dark);
+    border-color: var(--border-dark);
 }
 
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.3s;
-    border-radius: 24px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: 0.3s;
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: #000;
-}
-
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-
-/* ===== AD CONTAINERS ===== */
-.ad-container {
-    text-align: center;
-    padding: 20px;
-    background-color: var(--gray-light);
-    border: 1px solid var(--border-light);
-    margin: 10px 0;
-}
-
-/* ===== LANDING PAGE ===== */
+/* ==========================================================================
+   3. Layout & Containers
+   ========================================================================== */
 .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 40px 20px;
-    min-height: 80vh;
+}
+
+.quiz-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 30px;
 }
 
-.landing-content {
-    text-align: center;
-    width: 100%;
+.question-section {
+    flex: 3;
 }
 
-.main-heading {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    line-height: 1.2;
+.sidebar-section {
+    flex: 1;
 }
 
-.subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 3rem;
-    opacity: 0.7;
+/* ==========================================================================
+   4. Component Styles
+   ========================================================================== */
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
+.btn-primary {
+    background-color: var(--primary-accent);
+    color: white;
+}
+
+.card {
+    background-color: var(--gray-light);
+    border: 1px solid var(--border-light);
+    border-radius: 15px;
+    padding: 30px;
+}
+
+body.dark-mode .card {
+    background-color: var(--gray-dark);
+    border-color: var(--border-dark);
+}
+
+/* ==========================================================================
+   5. Page-Specific Styles
+   ========================================================================== */
+
+/* --- Index Page --- */
 .upload-area {
     border: 3px dashed var(--border-light);
     border-radius: 20px;
     padding: 60px 40px;
-    background-color: var(--gray-light);
-    transition: all 0.3s ease;
+    text-align: center;
     cursor: pointer;
-}
-
-.upload-area:hover {
-    border-color: #666;
-    transform: translateY(-5px);
+    transition: all 0.3s ease;
 }
 
 .upload-area.dragging {
-    border-color: #000;
-    background-color: #f0f0f0;
+    border-color: var(--primary-accent);
+    background-color: #f0f8ff;
 }
 
-.upload-icon {
-    font-size: 64px;
-    margin-bottom: 20px;
-    opacity: 0.5;
-}
-
-.choose-btn {
-    display: inline-block;
-    background-color: #000;
-    color: #fff;
-    padding: 15px 40px;
-    border-radius: 30px;
+/* --- Quiz Page --- */
+.option {
+    padding: 20px;
+    border: 2px solid var(--border-light);
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin: 20px 0;
-    transition: transform 0.2s;
 }
 
-.choose-btn:hover {
-    transform: scale(1.05);
+.option.selected {
+    border-color: var(--primary-accent);
 }
 
-body.dark-mode .choose-btn {
-    background-color: #fff;
-    color: #000;
+.question-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 10px;
 }
 
-.file-info {
-    opacity: 0.5;
-    font-size: 0.9rem;
-    margin-top: 15px;
+.question-grid button.attempted {
+    background-color: var(--success-green);
+    color: white;
 }
 
-/* ===== LOADING SPINNER ===== */
-.loading-container {
-    text-align: center;
-    margin-top: 30px;
+.question-grid button.marked {
+    background-color: var(--warning-yellow);
 }
 
-.spinner {
-    width: 50px;
-    height: 50px;
-    border: 4px solid var(--border-light);
-    border-top-color: #000;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 20px;
+/* --- Result Page --- */
+.review-item.correct {
+    border-left: 5px solid var(--success-green);
+}
+
+.review-item.wrong {
+    border-left: 5px solid var(--danger-red);
+}
+
+.stat-item h3 {
+    font-size: 2rem;
+}
+
+/* ==========================================================================
+   6. Animations & Effects
+   ========================================================================== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
 
-/* ===== QUIZ PAGE ===== */
-.quiz-container {
-    display: flex;
-    gap: 20px;
+.spinner {
+    animation: spin 1s linear infinite;
+    border: 4px solid var(--border-light);
+    border-top-color: var(--primary-accent);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+/* ==========================================================================
+   7. Utility Classes & Placeholders
+   ========================================================================== */
+.ad-placeholder {
+    background-color: var(--gray-light);
+    border: 1px solid var(--border-light);
     padding: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
-    min-height: 100vh;
-}
-
-.question-section {
-    flex: 7;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.sidebar-section {
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.quiz-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: var(--gray-light);
-    border-radius: 10px;
-}
-
-.home-btn {
-    background: none;
-    border: 1px solid var(--border-light);
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s;
-}
-
-.home-btn:hover {
-    background-color: var(--gray-light);
-}
-
-.question-card {
-    background-color: var(--gray-light);
-    border: 1px solid var(--border-light);
-    border-radius: 15px;
-    padding: 40px;
-}
-
-.question-number {
-    font-size: 0.9rem;
-    opacity: 0.6;
-    margin-bottom: 20px;
-}
-
-.question-text {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
-    font-weight: 500;
-}
-
-.options-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.option {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border: 2px solid var(--border-light);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.option:hover {
-    border-color: #000;
-}
-
-.option input[type="radio"] {
-    margin-right: 15px;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-.option.correct {
-    background-color: #d4edda;
-    border-color: #28a745;
-}
-
-.option.wrong {
-    background-color: #f8d7da;
-    border-color: #dc3545;
-}
-
-/* ===== QUIZ CONTROLS ===== */
-.quiz-controls {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.btn {
-    padding: 12px 30px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s;
-}
-
-.btn-primary {
-    background-color: #000;
-    color: #fff;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-}
-
-.btn-secondary {
-    background-color: var(--gray-light);
-    border: 1px solid var(--border-light);
-    color: inherit;
-}
-
-.btn-warning {
-    background-color: #ffc107;
-    color: #000;
-}
-
-/* ===== SIDEBAR ===== */
-.timer-box {
-    background-color: var(--gray-light);
-    border: 1px solid var(--border-light);
-    border-radius: 15px;
-    padding: 30px;
     text-align: center;
-}
-
-.timer-icon {
-    font-size: 48px;
-    margin-bottom: 15px;
-    opacity: 0.5;
-}
-
-.timer-display {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-
-.timer-label {
-    opacity: 0.6;
-}
-
-.summary-box {
-    background-color: var(--gray-light);
-    border: 1px solid var(--border-light);
-    border-radius: 15px;
-    padding: 25px;
-}
-
-.summary-box h3 {
-    margin-bottom: 20px;
-}
-
-.summary-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-.summary-item .value {
-    font-weight: 700;
-}
-
-.summary-item .attempted { color: #28a745; }
-.summary-item .skipped { color: #6c757d; }
-.summary-item .marked { color: #ffc107; }
-
-.question-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    padding: 20px;
-    background-color: var(--gray-light);
-    border-radius: 15px;
-}
-
-.question-grid button {
-    aspect-ratio: 1;
-    border: 1px solid var(--border-light);
-    background-color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s;
-}
-
-.question-grid button:hover {
-    background-color: #000;
-    color: #fff;
-}
-
-.question-grid button.attempted {
-    background-color: #28a745;
-    color: #fff;
-}
-
-.question-grid button.marked {
-    background-color: #ffc107;
-    color: #000;
-}
-
-/* ===== RESULT PAGE ===== */
-.result-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    text-align: center;
-}
-
-.result-header {
-    margin-bottom: 40px;
-}
-
-.success-icon {
-    font-size: 80px;
-    color: #28a745;
-    margin-bottom: 20px;
-}
-
-.result-subtitle {
-    opacity: 0.6;
-    font-size: 1.1rem;
-}
-
-.score-card {
-    background-color: var(--gray-light);
-    border: 1px solid var(--border-light);
-    border-radius: 20px;
-    padding: 50px;
-    margin-bottom: 40px;
-}
-
-.score-circle {
-    font-size: 4rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
-
-.score-total {
-    font-size: 2rem;
-    opacity: 0.5;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 40px;
-}
-
-.stat-item {
-    background-color: var(--gray-light);
-    border: 1px solid var(--border-light);
-    border-radius: 15px;
-    padding: 30px;
-}
-
-.stat-item .material-icons {
-    font-size: 48px;
-    opacity: 0.5;
-    margin-bottom: 15px;
-}
-
-.stat-item h3 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.review-section {
-    background-color: var(--gray-light);
-    border: 1px solid var(--border-light);
-    border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 40px;
-    text-align: left;
-}
-
-.review-section h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.result-actions {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 768px) {
-    .main-heading {
-        font-size: 2rem;
-    }
-    
-    .quiz-container {
-        flex-direction: column;
-    }
-    
-    .question-grid {
-        grid-template-columns: repeat(5, 1fr);
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    margin: 20px 0;
 }
 
 .recaptcha-placeholder {
-    margin-top: 30px;
-    padding: 20px;
     background-color: var(--gray-light);
     border: 1px solid var(--border-light);
-    border-radius: 10px;
-    opacity: 0.6;
+    padding: 30px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .quiz-container {
+        flex-direction: column;
+    }
 }

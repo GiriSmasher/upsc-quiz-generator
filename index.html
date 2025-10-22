@@ -1,86 +1,76 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>UPSC Quiz Generator</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#141414',
-                        'background-light': '#f7f7f7',
-                        'background-dark': '#191919',
-                    },
-                    fontFamily: {
-                        display: ['Inter', 'sans-serif'],
-                    },
-                    borderRadius: {
-                        DEFAULT: '0.25rem',
-                        lg: '0.5rem',
-                        xl: '0.75rem',
-                        full: '9999px',
-                    },
-                },
-            },
-        };
-    </script>
-    <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-    </style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPSC Quiz Generator - AI-Powered Quiz Builder</title>
+    <meta name="description" content="Create AI-powered quizzes from your PDF notes. Ideal for UPSC and competitive exam preparation.">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Scripts -->
+    <!-- PDF.js library for text extraction -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- AI quiz generation logic -->
+    <script src="aiQuiz.js" defer></script>
+    <!-- Main application script -->
+    <script src="script.js" defer></script>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display">
-    <div class="relative flex h-auto min-h-screen w-full flex-col">
-        <div class="layout-container flex h-full grow flex-col">
-            <div class="flex flex-1 justify-center py-5">
-                <div class="layout-content-container flex flex-col max-w-[960px] flex-1 gap-8">
-                    <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-[#363636] px-4 py-3">
-                        <div class="flex items-center gap-4 text-black dark:text-white">
-                            <div class="size-6">
-                                <svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z"></path>
-                                </svg>
-                            </div>
-                            <h2 class="text-black dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">UPSC Quiz Generator</h2>
-                        </div>
-                    </header>
-                    <div class="flex justify-center items-center h-24 bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500">
-                        <p class="text-sm">Advertisement</p>
-                    </div>
-                    <div class="flex flex-wrap justify-between gap-3 p-4">
-                        <p class="text-black dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] min-w-72 text-center w-full">Generate AI-Powered UPSC Quizzes Instantly from Your PDFs</p>
-                    </div>
-                    <div class="flex flex-col p-4">
-                        <div class="flex flex-col items-center gap-6 rounded-lg border-2 border-dashed border-gray-300 dark:border-[#4d4d4d] px-6 py-14">
-                            <span class="material-symbols-outlined text-gray-400 dark:text-gray-500 text-6xl">upload_file</span>
-                            <p class="text-black dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] max-w-[480px] text-center">Drag and drop your PDF here or click to browse</p>
-                            <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#primary]/90">
-                                <span class="truncate">Browse</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-center gap-4 p-4">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Please verify you are not a robot.</p>
-                        <div class="w-72 h-20 bg-gray-100 dark:bg-gray-800 rounded flex items-center justify-center">
-                            <p class="text-gray-400 dark:text-gray-500 text-sm">[Google reCAPTCHA]</p>
-                        </div>
-                    </div>
-                    <div class="flex justify-center items-center h-24 bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 mt-auto">
-                        <p class="text-sm">Advertisement</p>
-                    </div>
-                    <footer class="flex items-center justify-center gap-6 py-4 border-t border-solid border-gray-200 dark:border-[#363636] text-sm">
-                        <a class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white" href="#">About</a>
-                        <a class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white" href="#">Contact</a>
-                        <a class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white" href="#">Privacy Policy</a>
-                    </footer>
-                </div>
-            </div>
-        </div>
+<body>
+    <!-- Theme Toggle Switch -->
+    <div class="theme-toggle">
+        <span class="material-icons theme-icon">wb_sunny</span>
+        <label class="switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+        </label>
+        <span class="material-icons theme-icon">nights_stay</span>
     </div>
-</body></html>
+
+    <!-- Main Container -->
+    <div class="container">
+        <main class="landing-content">
+            <!-- Header Section -->
+            <header>
+                <h1 class="main-heading">Upload your Notes. Let AI Create Your Quiz.</h1>
+                <p class="subtitle">A smart, simple, and effective way to prepare for your exams.</p>
+            </header>
+
+            <!-- Ad Placeholder (Top) -->
+            <div class="ad-container" aria-label="Advertisement">
+                <!-- AdSense script will be placed here -->
+            </div>
+
+            <!-- PDF Upload Area -->
+            <section id="uploadSection">
+                <div id="uploadArea" class="upload-area" role="button" tabindex="0">
+                    <span class="material-icons upload-icon">cloud_upload</span>
+                    <p><strong>Drag &amp; drop your PDF here</strong></p>
+                    <p>or</p>
+                    <button id="browseBtn" class="choose-btn">Choose PDF</button>
+                    <input type="file" id="pdfInput" accept=".pdf" hidden>
+                    <p class="file-info">Supports PDF files up to 10MB.</p>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div id="loadingContainer" class="loading-container" style="display:none;">
+                    <div class="spinner"></div>
+                    <p>Generating your quiz, please wait...</p>
+                </div>
+            </section>
+
+            <!-- reCAPTCHA Placeholder -->
+            <div class="recaptcha-placeholder" aria-label="reCAPTCHA Security Check">
+                <!-- Google reCAPTCHA script will be placed here -->
+            </div>
+
+            <!-- Ad Placeholder (Bottom) -->
+            <div class="ad-container" aria-label="Advertisement">
+                <!-- AdSense script will be placed here -->
+            </div>
+        </main>
+    </div>
+</body>
+</html>
