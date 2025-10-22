@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPSC Quiz Generator - AI Powered</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Theme Toggle Switch -->
+    <div class="theme-toggle">
+        <span class="material-icons theme-icon">dark_mode</span>
+        <label class="switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <!-- Google AdSense Placeholder - Top -->
+    <div class="ad-container ad-top">
+        <p>[ Google AdSense - Top Banner ]</p>
+    </div>
+
+    <!-- Main Landing Page Container -->
+    <div class="container">
+        <div class="landing-content">
+            <!-- Heading -->
+            <h1 class="main-heading">Upload your Notes.<br>Let AI Create Your Quiz.</h1>
+            <p class="subtitle">Instant MCQ generation from your PDF study materials</p>
+
+            <!-- Drag and Drop Area -->
+            <div class="upload-area" id="uploadArea">
+                <span class="material-icons upload-icon">cloud_upload</span>
+                <h2>Drag & Drop your PDF here</h2>
+                <p>or</p>
+                <label for="pdfInput" class="choose-btn">Choose PDF</label>
+                <input type="file" id="pdfInput" accept=".pdf" hidden>
+                <p class="file-info">Supported: PDF files only</p>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div class="loading-container" id="loadingContainer" style="display: none;">
+                <div class="spinner"></div>
+                <p>Analyzing PDF and generating quiz...</p>
+            </div>
+
+            <!-- Google reCAPTCHA Placeholder -->
+            <div class="recaptcha-placeholder">
+                <p>[ Google reCAPTCHA will appear here ]</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google AdSense Placeholder - Bottom -->
+    <div class="ad-container ad-bottom">
+        <p>[ Google AdSense - Bottom Banner ]</p>
+    </div>
+
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    
+    <!-- Main Script -->
+    <script src="script.js"></script>
+    
+    <!-- AI Quiz Generator Module -->
+    <script src="aiQuiz.js"></script>
+</body>
+</html>
