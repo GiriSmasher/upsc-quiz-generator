@@ -1,267 +1,89 @@
-/**
- * AI Quiz Generator Module
- * 
- * This module contains the logic for generating quiz questions from PDF text.
- * Currently uses a placeholder algorithm with sample questions.
- * 
- * TO INTEGRATE REAL AI (Google Gemini/Palm or OpenAI GPT):
- * 1. Get your API key from Google AI Studio or OpenAI
- * 2. Replace the generateQuizFromPDF function below with actual API calls
- * 3. Add your API key to the configuration
- * 
- * Example integration points:
- * - Google Gemini API: https://ai.google.dev/
- * - OpenAI GPT API: https://platform.openai.com/
- */
-
-// ===== CONFIGURATION =====
-const QUIZ_CONFIG = {
-    numberOfQuestions: 10,
-    questionsPerPage: 1,
-    // Add your API key here when integrating real AI
-    apiKey: 'YOUR_API_KEY_HERE',
-    apiEndpoint: 'YOUR_API_ENDPOINT_HERE'
-};
+/* ---
+    UPSC Quiz Generator
+    aiQuiz.js
+    --- */
 
 /**
- * Main function to generate quiz from extracted PDF text
- * @param {string} pdfText - The extracted text from PDF
- * @returns {Promise<Array>} - Array of quiz questions
+ * @file This file contains the placeholder for the AI quiz generation logic.
+ * In a production environment, this would be replaced with a call to a
+ * backend service that uses a language model like Google's Gemini or PaLM
+ * to generate a quiz from the extracted PDF text.
  */
-async function generateQuizFromPDF(pdfText) {
-    console.log('Generating quiz from PDF text...');
-    console.log('Text length:', pdfText.length);
-    
-    // PLACEHOLDER: This is where you'll integrate actual AI
-    // For now, using a sample quiz generator
-    
-    // Option 1: Use the placeholder function below
-    return generatePlaceholderQuiz(pdfText);
-    
-    // Option 2: Integrate with Google Gemini API (uncomment when ready)
-    // return await generateWithGemini(pdfText);
-    
-    // Option 3: Integrate with OpenAI GPT (uncomment when ready)
-    // return await generateWithOpenAI(pdfText);
-}
 
 /**
- * Placeholder quiz generator
- * Generates sample questions based on text content
- * Replace this with actual AI integration
+ * Placeholder function to generate a quiz from PDF text.
+ * This function returns a static set of 10 multiple-choice questions in JSON format.
+ * It mimics the expected output from an AI service.
+ *
+ * @param {string} text - The text extracted from the user's PDF file.
+ * @returns {Array<Object>} An array of question objects.
  */
-function generatePlaceholderQuiz(text) {
-    // Extract some keywords from the text for context-aware questions
-    const words = text.toLowerCase().split(/\s+/);
-    const uniqueWords = [...new Set(words)].filter(w => w.length > 5);
-    
-    // Sample quiz structure
-    const sampleQuiz = [
+function generateQuizFromPDF(text) {
+    // --- Placeholder for Google AI API (Gemini/PaLM) Integration ---
+    // In a real application, you would make an API call here.
+    // Example:
+    // const response = await fetch('YOUR_BACKEND_API_ENDPOINT', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ pdfText: text })
+    // });
+    // const quizData = await response.json();
+    // return quizData;
+    // --- End of Placeholder ---
+
+    console.log("Generating quiz from text (using placeholder data):", text.substring(0, 100) + "...");
+
+    // Returning a mock quiz for demonstration purposes.
+    return [
         {
-            question: "What is the primary focus of this document?",
-            options: [
-                "General knowledge and concepts",
-                "Technical specifications",
-                "Historical events",
-                "Scientific theories"
-            ],
-            correctAnswer: 0
+            question: "What is the capital of India?",
+            options: ["Mumbai", "New Delhi", "Kolkata", "Chennai"],
+            answer: "New Delhi"
         },
         {
-            question: "Based on the content, which area does this material cover?",
-            options: [
-                "Arts and Literature",
-                "Science and Technology",
-                "History and Geography",
-                "Current Affairs"
-            ],
-            correctAnswer: 2
+            question: "Who was the first Prime Minister of India?",
+            options: ["Mahatma Gandhi", "Jawaharlal Nehru", "Sardar Vallabhbhai Patel", "Dr. B. R. Ambedkar"],
+            answer: "Jawaharlal Nehru"
         },
         {
-            question: "What type of examination is this material most suitable for?",
-            options: [
-                "Competitive Examinations",
-                "School Tests",
-                "Professional Certifications",
-                "Language Proficiency"
-            ],
-            correctAnswer: 0
+            question: "Which river is known as the 'Ganga of the South'?",
+            options: ["Krishna", "Godavari", "Cauvery", "Mahanadi"],
+            answer: "Godavari"
         },
         {
-            question: "The document emphasizes which of the following?",
-            options: [
-                "Theoretical concepts",
-                "Practical applications",
-                "Both theory and practice",
-                "Neither theory nor practice"
-            ],
-            correctAnswer: 2
+            question: "The Indian Parliament consists of:",
+            options: ["Lok Sabha only", "Rajya Sabha only", "Lok Sabha and Rajya Sabha", "President, Lok Sabha, and Rajya Sabha"],
+            answer: "President, Lok Sabha, and Rajya Sabha"
         },
         {
-            question: "What is the recommended approach to study this material?",
-            options: [
-                "Memorization only",
-                "Understanding concepts",
-                "Practice questions",
-                "All of the above"
-            ],
-            correctAnswer: 3
+            question: "When did India gain independence from British rule?",
+            options: ["1945", "1947", "1950", "1952"],
+            answer: "1947"
         },
         {
-            question: "Which of the following best describes the content structure?",
-            options: [
-                "Chronological order",
-                "Topic-based organization",
-                "Question-answer format",
-                "Case study approach"
-            ],
-            correctAnswer: 1
+            question: "Who is known as the 'Father of the Indian Constitution'?",
+            options: ["Mahatma Gandhi", "Jawaharlal Nehru", "Sardar Vallabhbhai Patel", "Dr. B. R. Ambedkar"],
+            answer: "Dr. B. R. Ambedkar"
         },
         {
-            question: "The material is most relevant for which type of learner?",
-            options: [
-                "Beginners",
-                "Intermediate level",
-                "Advanced students",
-                "All levels"
-            ],
-            correctAnswer: 3
+            question: "What is the national animal of India?",
+            options: ["Lion", "Tiger", "Elephant", "Leopard"],
+            answer: "Tiger"
         },
         {
-            question: "What is the key takeaway from this document?",
-            options: [
-                "Factual information",
-                "Analytical skills",
-                "Critical thinking",
-                "All of the above"
-            ],
-            correctAnswer: 3
+            question: "The 'Dandi March' led by Mahatma Gandhi was associated with:",
+            options: ["Khilafat Movement", "Non-Cooperation Movement", "Civil Disobedience Movement", "Quit India Movement"],
+            answer: "Civil Disobedience Movement"
         },
         {
-            question: "How should this material be used for best results?",
-            options: [
-                "Read once thoroughly",
-                "Make notes and revise",
-                "Practice with mock tests",
-                "All of the above"
-            ],
-            correctAnswer: 3
+            question: "Which of the following is a classical dance form of Kerala?",
+            options: ["Bharatanatyam", "Kathakali", "Kuchipudi", "Odissi"],
+            answer: "Kathakali"
         },
         {
-            question: "The document is best suited for preparation of?",
-            options: [
-                "UPSC Civil Services",
-                "State PSC Exams",
-                "Other Competitive Exams",
-                "All of the above"
-            ],
-            correctAnswer: 3
+            question: "The highest civilian award in India is:",
+            options: ["Padma Vibhushan", "Bharat Ratna", "Padma Bhushan", "Param Vir Chakra"],
+            answer: "Bharat Ratna"
         }
     ];
-    
-    // Return only the number of questions specified in config
-    return sampleQuiz.slice(0, QUIZ_CONFIG.numberOfQuestions);
-}
-
-/**
- * INTEGRATION TEMPLATE: Google Gemini API
- * Uncomment and configure when ready to use
- */
-/*
-async function generateWithGemini(text) {
-    const API_KEY = QUIZ_CONFIG.apiKey;
-    const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
-    
-    const prompt = `Based on the following text, generate ${QUIZ_CONFIG.numberOfQuestions} multiple choice questions suitable for UPSC preparation. 
-    
-    For each question, provide:
-    - A clear question
-    - 4 options (labeled A, B, C, D)
-    - The correct answer index (0-3)
-    
-    Format the response as a JSON array.
-    
-    Text: ${text.substring(0, 5000)}
-    
-    Return ONLY valid JSON in this format:
-    [{"question": "...", "options": ["A", "B", "C", "D"], "correctAnswer": 0}]`;
-    
-    try {
-        const response = await fetch(`${API_URL}?key=${API_KEY}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{
-                        text: prompt
-                    }]
-                }]
-            })
-        });
-        
-        const data = await response.json();
-        const generatedText = data.candidates[0].content.parts[0].text;
-        
-        // Parse the JSON response
-        const quiz = JSON.parse(generatedText);
-        return quiz;
-    } catch (error) {
-        console.error('Error generating quiz with Gemini:', error);
-        // Fallback to placeholder
-        return generatePlaceholderQuiz(text);
-    }
-}
-*/
-
-/**
- * INTEGRATION TEMPLATE: OpenAI GPT API
- * Uncomment and configure when ready to use
- */
-/*
-async function generateWithOpenAI(text) {
-    const API_KEY = QUIZ_CONFIG.apiKey;
-    const API_URL = 'https://api.openai.com/v1/chat/completions';
-    
-    const prompt = `Based on the following text, generate ${QUIZ_CONFIG.numberOfQuestions} multiple choice questions suitable for UPSC preparation. Return only valid JSON.
-    
-    Text: ${text.substring(0, 5000)}
-    
-    Format: [{"question": "...", "options": ["A", "B", "C", "D"], "correctAnswer": 0}]`;
-    
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${API_KEY}`
-            },
-            body: JSON.stringify({
-                model: 'gpt-3.5-turbo',
-                messages: [{
-                    role: 'user',
-                    content: prompt
-                }],
-                temperature: 0.7
-            })
-        });
-        
-        const data = await response.json();
-        const generatedText = data.choices[0].message.content;
-        
-        // Parse the JSON response
-        const quiz = JSON.parse(generatedText);
-        return quiz;
-    } catch (error) {
-        console.error('Error generating quiz with OpenAI:', error);
-        // Fallback to placeholder
-        return generatePlaceholderQuiz(text);
-    }
-}
-*/
-
-// Export for use in other scripts
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { generateQuizFromPDF };
 }

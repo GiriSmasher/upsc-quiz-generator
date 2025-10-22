@@ -1,166 +1,48 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>UPSC Quiz Generator</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#141414',
-                        'background-light': '#f7f7f7',
-                        'background-dark': '#191919',
-                    },
-                    fontFamily: {
-                        display: ['Inter', 'sans-serif'],
-                    },
-                    borderRadius: {
-                        DEFAULT: '0.25rem',
-                        lg: '0.5rem',
-                        xl: '0.75rem',
-                        full: '9999px',
-                    },
-                },
-            },
-        };
-    </script>
-    <style type="text/tailwindcss">
-        :root {
-            --radio-dot-svg-light: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23000' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
-            --radio-dot-svg-dark: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23fff' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.9; }
-        }
-        .animate-pulse-slow {
-            animation: pulse 2s infinite ease-in-out;
-        }
-        @keyframes correct-answer {
-            0% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(-10px); opacity: 0.5; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-        .animate-correct {
-            animation: correct-answer 0.5s ease-out;
-        }
-        @keyframes incorrect-answer {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
-        }
-        .animate-incorrect {
-            animation: incorrect-answer 0.3s ease-in-out;
-        }
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 0.5s forwards;
-        }
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-    </style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPSC Quiz - Quiz Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display">
-    <div class="relative flex h-auto min-h-screen w-full flex-col">
-        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-700 px-10 py-3">
-            <div class="flex items-center gap-4 text-black dark:text-white">
-                <div class="size-6">
-                    <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z"></path>
-                    </svg>
+<body>
+    <!-- Main Container -->
+    <div class="container quiz-container">
+        <!-- Quiz Content -->
+        <div class="quiz-content">
+            <!-- Left Section: Questions and Options -->
+            <div class="question-section">
+                <div id="question-container">
+                    <!-- Dynamic Question and Options will be loaded here -->
                 </div>
-                <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">UPSC Quiz Generator</h2>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="group relative flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 p-2 shadow-lg">
-                    <span class="material-symbols-outlined text-black dark:text-white text-2xl animate-pulse-slow cursor-help">hourglass_empty</span>
-                    <div class="absolute right-full mr-2 hidden min-w-max rounded-md bg-black px-3 py-1 text-sm text-white opacity-0 group-hover:block group-hover:opacity-100 transition-opacity duration-300">
-                        <span class="font-mono font-bold tracking-widest">01:59:59</span>
-                    </div>
-                </div>
-                <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-gray-200 dark:bg-gray-800 text-black dark:text-white text-sm font-bold leading-normal tracking-[0.015em] min-w-0">
-                    <span class="material-symbols-outlined">dark_mode</span>
-                </button>
-            </div>
-        </header>
-        <main class="flex-1 flex flex-col lg:flex-row p-5 lg:p-10 gap-5 lg:gap-10">
-            <div class="w-full lg:w-[calc(100%-280px-2.5rem)] flex flex-col gap-5">
-                <div class="bg-white dark:bg-[#black]/50 rounded-lg p-6 flex-1 flex flex-col">
-                    <h1 class="text-black dark:text-white tracking-tight text-[24px] font-bold leading-tight pb-3">Question 1 of 100</h1>
-                    <p class="text-black dark:text-gray-300 text-base font-normal leading-normal pb-6">Which of the following is the most populous state in India?</p>
-                    <div class="flex flex-col gap-3">
-                        <label class="flex items-center gap-4 rounded-lg border border-solid border-gray-300 dark:border-gray-700 p-4 hover:border-primary dark:hover:border-white transition-all duration-200">
-                            <input class="h-5 w-5 border-2 border-gray-400 dark:border-gray-600 bg-transparent text-transparent checked:border-primary dark:checked:border-white focus:outline-none focus:ring-0 focus:ring-offset-0 checked:bg-[image:var(--radio-dot-svg-light)] dark:checked:bg-[image:var(--radio-dot-svg-dark)]" name="quiz-option" type="radio">
-                            <div class="flex grow flex-col"><p class="text-black dark:text-white text-sm font-medium leading-normal">Uttar Pradesh</p></div>
-                        </label>
-                        <label class="flex items-center gap-4 rounded-lg border border-solid border-gray-300 dark:border-gray-700 p-4 hover:border-primary dark:hover:border-white transition-all duration-200">
-                            <input class="h-5 w-5 border-2 border-gray-400 dark:border-gray-600 bg-transparent text-transparent checked:border-primary dark:checked:border-white focus:outline-none focus:ring-0 focus:ring-offset-0 checked:bg-[image:var(--radio-dot-svg-light)] dark:checked:bg-[image:var(--radio-dot-svg-dark)]" name="quiz-option" type="radio">
-                            <div class="flex grow flex-col"><p class="text-black dark:text-white text-sm font-medium leading-normal">Maharashtra</p></div>
-                        </label>
-                        <label class="flex items-center gap-4 rounded-lg border border-solid border-gray-300 dark:border-gray-700 p-4 hover:border-primary dark:hover:border-white transition-all duration-200">
-                            <input class="h-5 w-5 border-2 border-gray-400 dark:border-gray-600 bg-transparent text-transparent checked:border-primary dark:checked:border-white focus:outline-none focus:ring-0 focus:ring-offset-0 checked:bg-[image:var(--radio-dot-svg-light)] dark:checked:bg-[image:var(--radio-dot-svg-dark)]" name="quiz-option" type="radio">
-                            <div class="flex grow flex-col"><p class="text-black dark:text-white text-sm font-medium leading-normal">Bihar</p></div>
-                        </label>
-                        <label class="flex items-center gap-4 rounded-lg border border-solid border-gray-300 dark:border-gray-700 p-4 hover:border-primary dark:hover:border-white transition-all duration-200">
-                            <input class="h-5 w-5 border-2 border-gray-400 dark:border-gray-600 bg-transparent text-transparent checked:border-primary dark:checked:border-white focus:outline-none focus:ring-0 focus:ring-offset-0 checked:bg-[image:var(--radio-dot-svg-light)] dark:checked:bg-[image:var(--radio-dot-svg-dark)]" name="quiz-option" type="radio">
-                            <div class="flex grow flex-col"><p class="text-black dark:text-white text-sm font-medium leading-normal">West Bengal</p></div>
-                        </label>
-                    </div>
-                    <div class="mt-auto pt-6 flex flex-wrap gap-3 justify-start">
-                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-gray-200 dark:bg-gray-800 text-black dark:text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
-                            <span class="truncate">Previous</span>
-                        </button>
-                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-gray-200 dark:bg-gray-800 text-black dark:text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
-                            <span class="truncate">Next</span>
-                        </button>
-                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-[#yellow-400]/20 text-yellow-600 dark:bg-[#yellow-500]/20 dark:text-yellow-400 text-base font-bold leading-normal tracking-[0.015em] border border-yellow-500 hover:bg-[#yellow-400]/30 dark:hover:bg-[#yellow-500]/30 transition-colors">
-                            <span class="truncate">Mark for Review</span>
-                        </button>
-                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-[#primary]/90 transition-colors ml-auto">
-                            <span class="truncate">Submit Test</span>
-                        </button>
-                    </div>
+                <div class="navigation-buttons">
+                    <button id="prev-button">Previous</button>
+                    <button id="next-button">Next</button>
+                    <button id="mark-review-button">Mark for Review</button>
                 </div>
             </div>
-            <div class="w-full lg:w-[280px] flex flex-col gap-5 flex-shrink-0">
-                <div class="bg-white dark:bg-[#black]/50 rounded-lg p-6 sticky top-5 right-5 shadow-lg flex flex-col gap-4">
-                    <h3 class="text-black dark:text-white text-xl font-bold mb-2">Scorecard</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center text-sm fade-in">
-                            <span class="text-gray-600 dark:text-gray-400">Total Questions:</span>
-                            <span class="font-semibold text-black dark:text-white text-lg">100</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm fade-in">
-                            <span class="text-gray-600 dark:text-gray-400">Attempted:</span>
-                            <span class="font-semibold text-green-600 dark:text-green-400 text-lg animate-correct">10</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm fade-in">
-                            <span class="text-gray-600 dark:text-gray-400">Correct:</span>
-                            <span class="font-semibold text-green-600 dark:text-green-400 text-lg animate-correct">8</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm fade-in">
-                            <span class="text-gray-600 dark:text-gray-400">Incorrect:</span>
-                            <span class="font-semibold text-red-600 dark:text-red-400 text-lg animate-incorrect">2</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm fade-in">
-                            <span class="text-gray-600 dark:text-gray-400">Skipped:</span>
-                            <span class="font-semibold text-gray-500 dark:text-gray-400 text-lg">90</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm fade-in">
-                            <span class="text-gray-600 dark:text-gray-400">Marked for Review:</span>
-                            <span class="font-semibold text-yellow-600 dark:text-yellow-400 text-lg">5</span>
-                        </div>
-                    </div>
+
+            <!-- Right Section: Timer and Summary -->
+            <div class="summary-section">
+                <div class="timer-container">
+                    <h3>Time Left</h3>
+                    <p id="timer">30:00</p>
                 </div>
+                <div class="summary-box">
+                    <h3>Quiz Summary</h3>
+                    <p>Total Questions: <span id="total-questions">10</span></p>
+                    <p>Attempted: <span id="attempted-questions">0</span></p>
+                    <p>Skipped: <span id="skipped-questions">10</span></p>
+                    <p>Marked for Review: <span id="marked-questions">0</span></p>
+                </div>
+                <button id="submit-test-button">Submit Test</button>
             </div>
-        </main>
+        </div>
     </div>
-</body></html>
+
+    <!-- Custom Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
