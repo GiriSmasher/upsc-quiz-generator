@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - UPSC Quiz Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="quiz-page">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <span class="material-icons theme-icon">dark_mode</span>
+        <label class="switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <!-- Quiz Container -->
+    <div class="quiz-container">
+        <!-- Left Section: Question Area (70%) -->
+        <div class="question-section">
+            <div class="quiz-header">
+                <h2>UPSC Quiz Test</h2>
+                <button class="home-btn" onclick="window.location.href='index.html'">
+                    <span class="material-icons">home</span> Home
+                </button>
+            </div>
+
+            <!-- Question Display -->
+            <div class="question-card" id="questionCard">
+                <div class="question-number">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span></div>
+                <h3 class="question-text" id="questionText">Loading question...</h3>
+                
+                <!-- Options -->
+                <div class="options-container" id="optionsContainer">
+                    <!-- Options will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="quiz-controls">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()">
+                    <span class="material-icons">arrow_back</span> Previous
+                </button>
+                <button class="btn btn-warning" id="markBtn" onclick="markForReview()">
+                    <span class="material-icons">flag</span> Mark for Review
+                </button>
+                <button class="btn btn-secondary" id="nextBtn" onclick="nextQuestion()">
+                    Next <span class="material-icons">arrow_forward</span>
+                </button>
+                <button class="btn btn-primary" id="submitBtn" onclick="submitQuiz()" style="display:none;">
+                    <span class="material-icons">check_circle</span> Submit Test
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Section: Timer & Summary (30%) -->
+        <div class="sidebar-section">
+            <!-- Timer -->
+            <div class="timer-box">
+                <span class="material-icons timer-icon">schedule</span>
+                <div class="timer-display" id="timerDisplay">30:00</div>
+                <p class="timer-label">Time Remaining</p>
+            </div>
+
+            <!-- Quiz Summary -->
+            <div class="summary-box">
+                <h3>Quiz Summary</h3>
+                <div class="summary-item">
+                    <span class="label">Total Questions:</span>
+                    <span class="value" id="summaryTotal">10</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Attempted:</span>
+                    <span class="value attempted" id="summaryAttempted">0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Skipped:</span>
+                    <span class="value skipped" id="summarySkipped">10</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Marked for Review:</span>
+                    <span class="value marked" id="summaryMarked">0</span>
+                </div>
+            </div>
+
+            <!-- Question Grid -->
+            <div class="question-grid" id="questionGrid">
+                <!-- Question number buttons will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="aiQuiz.js"></script>
+</body>
+</html>
