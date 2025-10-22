@@ -1,83 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results - UPSC Quiz Generator</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<html class="dark" lang="en"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>UPSC Quiz Results</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Playfair+Display:wght@700;900&amp;family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1f2937',
+                        'background-light': '#f7f7f7',
+                        'background-dark': '#121212',
+                        'card-dark': '#1a1a1a',
+                        'text-light': '#e0e0e0',
+                        'text-dark-secondary': '#b0b0b0',
+                        'accent-green': '#4CAF50',
+                        'accent-red': '#F44336',
+                    },
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        body: ['Merriweather', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        DEFAULT: '0.5rem',
+                        lg: '1rem',
+                        xl: '1.5rem',
+                        full: '9999px',
+                    },
+                    boxShadow: {
+                        editorial: '0 10px 30px rgba(0, 0, 0, 0.4)',
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
 </head>
-<body class="result-page">
-    <!-- Theme Toggle -->
-    <div class="theme-toggle">
-        <span class="material-icons theme-icon">dark_mode</span>
-        <label class="switch">
-            <input type="checkbox" id="themeToggle">
-            <span class="slider"></span>
-        </label>
+<body class="bg-background-dark font-body text-text-light antialiased">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <div class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-10">
+                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                    <div class="flex flex-col gap-6 p-4">
+                        <p class="text-text-light font-display text-5xl font-extrabold leading-tight tracking-tight">Quiz Debrief</p>
+                        <p class="text-text-dark-secondary text-lg font-normal leading-relaxed">A detailed review of your performance and insights into each question.</p>
+                    </div>
+                    <div class="flex flex-col md:flex-row flex-wrap gap-8 p-4 pt-6">
+                        <div class="flex min-w-[200px] flex-1 flex-col items-center justify-center gap-3 rounded-xl p-8 bg-card-dark border border-gray-700 shadow-editorial transform transition-transform duration-300 hover:scale-[1.02]">
+                            <p class="text-accent-green text-6xl font-display font-bold leading-none tracking-tight">8<span class="text-text-light text-3xl">/10</span></p>
+                            <p class="text-text-dark-secondary text-lg font-sans font-medium leading-normal">Score Achieved</p>
+                        </div>
+                        <div class="flex min-w-[200px] flex-1 flex-col items-center justify-center gap-3 rounded-xl p-8 bg-card-dark border border-gray-700 shadow-editorial transform transition-transform duration-300 hover:scale-[1.02]">
+                            <p class="text-purple-400 text-6xl font-display font-bold leading-none tracking-tight">12:35</p>
+                            <p class="text-text-dark-secondary text-lg font-sans font-medium leading-normal">Time Expended</p>
+                        </div>
+                    </div>
+                    <h2 class="text-text-light font-display text-4xl font-bold leading-tight tracking-tight px-4 pb-4 pt-10">Editorial Review</h2>
+                    <div class="flex flex-col gap-6">
+                        <div class="flex flex-col gap-4 bg-card-dark px-6 py-6 rounded-xl border border-[#accent-red]/40 shadow-md">
+                            <div class="flex items-start gap-4">
+                                <div class="text-white flex items-center justify-center rounded-full bg-accent-red shrink-0 size-12 shadow-lg">
+                                    <span class="material-symbols-outlined text-3xl">close</span>
+                                </div>
+                                <div class="flex flex-1 flex-col justify-center">
+                                    <p class="text-text-light font-body text-xl font-semibold leading-relaxed">Which of the following is a fundamental right in the Indian Constitution?</p>
+                                </div>
+                            </div>
+                            <div class="pl-16 flex flex-col gap-2">
+                                <p class="text-text-dark-secondary text-base font-sans font-normal leading-relaxed">Your Answer: <span class="text-accent-red font-medium">Right to Property</span></p>
+                                <p class="text-text-dark-secondary text-base font-sans font-normal leading-relaxed">Correct Answer: <span class="text-accent-green font-medium">Right to Equality</span></p>
+                                <p class="text-text-dark-secondary text-sm font-sans font-light leading-relaxed mt-2 italic">Understanding fundamental rights is crucial for civil liberties. The Right to Property was removed as a fundamental right by the 44th Amendment Act, 1978.</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-4 bg-card-dark px-6 py-6 rounded-xl border border-[#accent-green]/40 shadow-md">
+                            <div class="flex items-start gap-4">
+                                <div class="text-white flex items-center justify-center rounded-full bg-accent-green shrink-0 size-12 shadow-lg">
+                                    <span class="material-symbols-outlined text-3xl">check</span>
+                                </div>
+                                <div class="flex flex-1 flex-col justify-center">
+                                    <p class="text-text-light font-body text-xl font-semibold leading-relaxed">The President of India is elected by an electoral college consisting of:</p>
+                                </div>
+                            </div>
+                            <div class="pl-16 flex flex-col gap-2">
+                                <p class="text-text-dark-secondary text-base font-sans font-normal leading-relaxed">Your Answer: <span class="text-accent-green font-medium">Elected members of both Houses of Parliament and the State Legislative Assemblies</span></p>
+                                <p class="text-text-dark-secondary text-sm font-sans font-light leading-relaxed mt-2 italic">This electoral process ensures broad representation in the election of the President, highlighting India's parliamentary democracy.</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-4 bg-card-dark px-6 py-6 rounded-xl border border-[#accent-red]/40 shadow-md">
+                            <div class="flex items-start gap-4">
+                                <div class="text-white flex items-center justify-center rounded-full bg-accent-red shrink-0 size-12 shadow-lg">
+                                    <span class="material-symbols-outlined text-3xl">close</span>
+                                </div>
+                                <div class="flex flex-1 flex-col justify-center">
+                                    <p class="text-text-light font-body text-xl font-semibold leading-relaxed">Who was the first Governor-General of Bengal?</p>
+                                </div>
+                            </div>
+                            <div class="pl-16 flex flex-col gap-2">
+                                <p class="text-text-dark-secondary text-base font-sans font-normal leading-relaxed">Your Answer: <span class="text-accent-red font-medium">Lord Mountbatten</span></p>
+                                <p class="text-text-dark-secondary text-base font-sans font-normal leading-relaxed">Correct Answer: <span class="text-accent-green font-medium">Warren Hastings</span></p>
+                                <p class="text-text-dark-secondary text-sm font-sans font-light leading-relaxed mt-2 italic">Warren Hastings played a pivotal role in the early British administration in India. Lord Mountbatten was the last Viceroy of India and the first Governor-General of independent India.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4 p-4 mt-8">
+                        <button class="flex-1 px-8 py-4 bg-blue-700 text-white font-sans font-bold rounded-lg hover:bg-blue-800 transition-colors shadow-lg">Restart Quiz</button>
+                        <button class="flex-1 px-8 py-4 bg-gray-700 text-text-light font-sans font-bold rounded-lg hover:bg-gray-600 transition-colors shadow-lg">Go Home</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Results Container -->
-    <div class="result-container">
-        <div class="result-header">
-            <span class="material-icons success-icon">check_circle</span>
-            <h1>Quiz Completed!</h1>
-            <p class="result-subtitle">Here are your results</p>
-        </div>
-
-        <!-- Score Display -->
-        <div class="score-card">
-            <div class="score-circle">
-                <span class="score-text" id="scoreText">0</span>
-                <span class="score-total">/ <span id="totalScore">10</span></span>
-            </div>
-            <p class="score-label">Correct Answers</p>
-        </div>
-
-        <!-- Detailed Stats -->
-        <div class="stats-grid">
-            <div class="stat-item">
-                <span class="material-icons">schedule</span>
-                <h3 id="timeTaken">00:00</h3>
-                <p>Time Taken</p>
-            </div>
-            <div class="stat-item">
-                <span class="material-icons">done_all</span>
-                <h3 id="correctCount">0</h3>
-                <p>Correct</p>
-            </div>
-            <div class="stat-item">
-                <span class="material-icons">close</span>
-                <h3 id="wrongCount">0</h3>
-                <p>Wrong</p>
-            </div>
-            <div class="stat-item">
-                <span class="material-icons">flag</span>
-                <h3 id="markedCount">0</h3>
-                <p>Marked</p>
-            </div>
-        </div>
-
-        <!-- Question Review -->
-        <div class="review-section">
-            <h2>Review Your Answers</h2>
-            <div class="review-list" id="reviewList">
-                <!-- Questions with answers will be displayed here -->
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="result-actions">
-            <button class="btn btn-secondary" onclick="window.location.href='index.html'">
-                <span class="material-icons">home</span> Go Home
-            </button>
-            <button class="btn btn-primary" onclick="restartQuiz()">
-                <span class="material-icons">replay</span> Restart Quiz
-            </button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+</body></html>
