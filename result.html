@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - UPSC Quiz Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="result-page">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <span class="material-icons theme-icon">dark_mode</span>
+        <label class="switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <!-- Results Container -->
+    <div class="result-container">
+        <div class="result-header">
+            <span class="material-icons success-icon">check_circle</span>
+            <h1>Quiz Completed!</h1>
+            <p class="result-subtitle">Here are your results</p>
+        </div>
+
+        <!-- Score Display -->
+        <div class="score-card">
+            <div class="score-circle">
+                <span class="score-text" id="scoreText">0</span>
+                <span class="score-total">/ <span id="totalScore">10</span></span>
+            </div>
+            <p class="score-label">Correct Answers</p>
+        </div>
+
+        <!-- Detailed Stats -->
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="material-icons">schedule</span>
+                <h3 id="timeTaken">00:00</h3>
+                <p>Time Taken</p>
+            </div>
+            <div class="stat-item">
+                <span class="material-icons">done_all</span>
+                <h3 id="correctCount">0</h3>
+                <p>Correct</p>
+            </div>
+            <div class="stat-item">
+                <span class="material-icons">close</span>
+                <h3 id="wrongCount">0</h3>
+                <p>Wrong</p>
+            </div>
+            <div class="stat-item">
+                <span class="material-icons">flag</span>
+                <h3 id="markedCount">0</h3>
+                <p>Marked</p>
+            </div>
+        </div>
+
+        <!-- Question Review -->
+        <div class="review-section">
+            <h2>Review Your Answers</h2>
+            <div class="review-list" id="reviewList">
+                <!-- Questions with answers will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="result-actions">
+            <button class="btn btn-secondary" onclick="window.location.href='index.html'">
+                <span class="material-icons">home</span> Go Home
+            </button>
+            <button class="btn btn-primary" onclick="restartQuiz()">
+                <span class="material-icons">replay</span> Restart Quiz
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
