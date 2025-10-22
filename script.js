@@ -17,46 +17,98 @@ if (themeToggle) {
 }
 
 // ===== PDF UPLOAD & DRAG-DROP (INDEX PAGE) =====
-const uploadArea = document.getElementById('uploadArea');
-const pdfInput = document.getElementById('pdfInput');
-const loadingContainer = document.getElementById('loadingContainer');
+// Ensure this code runs only on the index page by checking for the existence of the uploadArea element.
+document.addEventListener('DOMContentLoaded', () => {
+    const uploadArea = document.getElementById('uploadArea');
+    const pdfInput = document.getElementById('pdfInput');
+    const browseBtn = document.getElementById('browseBtn');
 
-if (uploadArea && pdfInput) {
-    // Click to upload
-    uploadArea.addEventListener('click', () => pdfInput.click());
-    
-    // File selection
+    // Early exit if the necessary elements are not on the page.
+    // This prevents errors on other pages like quiz.html or result.html.
+    if (!uploadArea || !pdfInput || !browseBtn) {
+        return;
+    }
+
+    // --- Event Listeners ---
+
+    // 1. Click Event for the entire upload area
+    // Triggers the hidden file input when the upload area is clicked.
+    uploadArea.addEventListener('click', () => {
+        pdfInput.click();
+    });
+
+    // 2. Click Event for the "Browse" button
+    // Also triggers the hidden file input, but stops the event from bubbling up to the uploadArea.
+    // This prevents the click event from firing twice.
+    browseBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevents the uploadArea click listener from firing as well.
+        pdfInput.click();
+    });
+
+    // 3. Change Event for the file input
+    // This is triggered when a file is selected through the file picker.
     pdfInput.addEventListener('change', handleFileSelect);
-    
-    // Drag and drop
+
+    // 4. Dragover Event
+    // Adds a visual indicator ('dragging') when a file is dragged over the upload area.
+    // preventDefault is crucial to allow the 'drop' event to fire.
     uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
         uploadArea.classList.add('dragging');
     });
-    
+
+    // 5. Dragleave Event
+    // Removes the visual indicator when the dragged file leaves the upload area.
     uploadArea.addEventListener('dragleave', () => {
         uploadArea.classList.remove('dragging');
     });
-    
+
+    // 6. Drop Event
+    // Handles the file when it is dropped onto the upload area.
     uploadArea.addEventListener('drop', (e) => {
         e.preventDefault();
         uploadArea.classList.remove('dragging');
+
+        // Retrieve the dropped file.
         const file = e.dataTransfer.files[0];
+
+        // Validate and process the file.
         if (file && file.type === 'application/pdf') {
-            processPDF(file);
+            handleFile(file);
         } else {
-            alert('Please upload a valid PDF file');
+            alert('Please upload a valid PDF file.');
         }
     });
-}
+});
 
+
+// --- File Handling Functions ---
+
+/**
+ * Handles the file selected from the file input.
+ * @param {Event} e The file input change event.
+ */
 function handleFileSelect(e) {
     const file = e.target.files[0];
     if (file && file.type === 'application/pdf') {
-        processPDF(file);
+        handleFile(file);
     } else {
-        alert('Please upload a valid PDF file');
+        alert('Please upload a valid PDF file.');
     }
+}
+
+/**
+ * Processes the validated PDF file.
+ * This function will be responsible for the next steps, like showing a loading indicator
+ * and starting the PDF processing.
+ * @param {File} file The PDF file to process.
+ */
+function handleFile(file) {
+    console.log('PDF file selected:', file.name);
+    // TODO: Implement the next steps, such as displaying a loading animation
+    // and calling the processPDF function.
+    // For now, we'll just log to the console.
+    processPDF(file);
 }
 
 async function processPDF(file) {
