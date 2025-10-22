@@ -36,10 +36,12 @@ async function generateQuizFromPDF(pdfText) {
     // For now, using a sample quiz generator
     
     // Option 1: Use the placeholder function below
-    return generatePlaceholderQuiz(pdfText);
+    const generatedQuiz = generatePlaceholderQuiz(pdfText);
+    return validateQuizData(generatedQuiz);
     
     // Option 2: Integrate with Google Gemini API (uncomment when ready)
-    // return await generateWithGemini(pdfText);
+    // const generatedQuiz = await generateWithGemini(pdfText);
+    // return validateQuizData(generatedQuiz);
     
     // Option 3: Integrate with OpenAI GPT (uncomment when ready)
     // return await generateWithOpenAI(pdfText);
@@ -161,6 +163,50 @@ function generatePlaceholderQuiz(text) {
     
     // Return only the number of questions specified in config
     return sampleQuiz.slice(0, QUIZ_CONFIG.numberOfQuestions);
+}
+
+function validateQuizData(quiz) {
+    if (!quiz || !Array.isArray(quiz) || quiz.length < 10 || quiz.length > 20) {
+        throw new Error('Invalid quiz data: Question count must be between 10 and 20.');
+    }
+
+    const validatedQuiz = [];
+    const seenQuestions = new Set();
+
+    for (const question of quiz) {
+        if (!question.question || typeof question.question !== 'string' || question.question.trim() === '') {
+            console.warn('Skipping empty question.');
+            continue;
+        }
+
+        if (seenQuestions.has(question.question.trim().toLowerCase())) {
+            console.warn('Skipping duplicate question.');
+            continue;
+        }
+
+        if (!question.options || !Array.isArray(question.options) || question.options.length !== 4) {
+            throw new Error(`Invalid quiz data: Question "${question.question}" does not have 4 options.`);
+        }
+
+        const cleanedOptions = question.options.map(opt => typeof opt === 'string' ? opt.trim() : '');
+        if (cleanedOptions.some(opt => opt === '')) {
+            console.warn(`Skipping question "${question.question}" due to empty options.`);
+            continue;
+        }
+
+        validatedQuiz.push({
+            ...question,
+            question: question.question.trim(),
+            options: cleanedOptions,
+        });
+        seenQuestions.add(question.question.trim().toLowerCase());
+    }
+
+    if (validatedQuiz.length === 0) {
+        throw new Error('Invalid quiz data: No valid questions found.');
+    }
+
+    return validatedQuiz;
 }
 
 /**

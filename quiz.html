@@ -82,85 +82,63 @@
             <div class="flex items-center gap-4">
                 <div class="group relative flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 p-2 shadow-lg">
                     <span class="material-symbols-outlined text-black dark:text-white text-2xl animate-pulse-slow cursor-help">hourglass_empty</span>
-                    <div class="absolute right-full mr-2 hidden min-w-max rounded-md bg-black px-3 py-1 text-sm text-white opacity-0 group-hover:block group-hover:opacity-100 transition-opacity duration-300">
-                        <span class="font-mono font-bold tracking-widest">01:59:59</span>
+                    <div id="timerDisplay" class="absolute right-full mr-2 hidden min-w-max rounded-md bg-black px-3 py-1 text-sm text-white opacity-0 group-hover:block group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="font-mono font-bold tracking-widest">30:00</span>
                     </div>
                 </div>
-                <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-gray-200 dark:bg-gray-800 text-black dark:text-white text-sm font-bold leading-normal tracking-[0.015em] min-w-0">
+                <button id="themeToggle" class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-gray-200 dark:bg-gray-800 text-black dark:text-white text-sm font-bold leading-normal tracking-[0.015em] min-w-0">
                     <span class="material-symbols-outlined">dark_mode</span>
                 </button>
             </div>
         </header>
-        <main class="flex-1 flex flex-col lg:flex-row p-5 lg:p-10 gap-5 lg:gap-10">
-            <div class="w-full lg:w-[calc(100%-280px-2.5rem)] flex flex-col gap-5">
-                <div class="bg-white dark:bg-[#black]/50 rounded-lg p-6 flex-1 flex flex-col">
-                    <h1 class="text-black dark:text-white tracking-tight text-[24px] font-bold leading-tight pb-3">Question 1 of 100</h1>
-                    <p class="text-black dark:text-gray-300 text-base font-normal leading-normal pb-6">Which of the following is the most populous state in India?</p>
-                    <div class="flex flex-col gap-3">
-                        <label class="flex items-center gap-4 rounded-lg border border-solid border-gray-300 dark:border-gray-700 p-4 hover:border-primary dark:hover:border-white transition-all duration-200">
-                            <input class="h-5 w-5 border-2 border-gray-400 dark:border-gray-600 bg-transparent text-transparent checked:border-primary dark:checked:border-white focus:outline-none focus:ring-0 focus:ring-offset-0 checked:bg-[image:var(--radio-dot-svg-light)] dark:checked:bg-[image:var(--radio-dot-svg-dark)]" name="quiz-option" type="radio">
-                            <div class="flex grow flex-col"><p class="text-black dark:text-white text-sm font-medium leading-normal">Uttar Pradesh</p></div>
-                        </label>
-                        <label class="flex items-center gap-4 rounded-lg border border-solid border-gray-300 dark:border-gray-700 p-4 hover:border-primary dark:hover:border-white transition-all duration-200">
-                            <input class="h-5 w-5 border-2 border-gray-400 dark:border-gray-600 bg-transparent text-transparent checked:border-primary dark:checked:border-white focus:outline-none focus:ring-0 focus:ring-offset-0 checked:bg-[image:var(--radio-dot-svg-light)] dark:checked:bg-[image:var(--radio-dot-svg-dark)]" name="quiz-option" type="radio">
-                            <div class="flex grow flex-col"><p class="text-black dark:text-white text-sm font-medium leading-normal">Maharashtra</p></div>
-                        </label>
-                        <label class="flex items-center gap-4 rounded-lg border border-solid border-gray-300 dark:border-gray-700 p-4 hover:border-primary dark:hover:border-white transition-all duration-200">
-                            <input class="h-5 w-5 border-2 border-gray-400 dark:border-gray-600 bg-transparent text-transparent checked:border-primary dark:checked:border-white focus:outline-none focus:ring-0 focus:ring-offset-0 checked:bg-[image:var(--radio-dot-svg-light)] dark:checked:bg-[image:var(--radio-dot-svg-dark)]" name="quiz-option" type="radio">
-                            <div class="flex grow flex-col"><p class="text-black dark:text-white text-sm font-medium leading-normal">Bihar</p></div>
-                        </label>
-                        <label class="flex items-center gap-4 rounded-lg border border-solid border-gray-300 dark:border-gray-700 p-4 hover:border-primary dark:hover:border-white transition-all duration-200">
-                            <input class="h-5 w-5 border-2 border-gray-400 dark:border-gray-600 bg-transparent text-transparent checked:border-primary dark:checked:border-white focus:outline-none focus:ring-0 focus:ring-offset-0 checked:bg-[image:var(--radio-dot-svg-light)] dark:checked:bg-[image:var(--radio-dot-svg-dark)]" name="quiz-option" type="radio">
-                            <div class="flex grow flex-col"><p class="text-black dark:text-white text-sm font-medium leading-normal">West Bengal</p></div>
-                        </label>
-                    </div>
-                    <div class="mt-auto pt-6 flex flex-wrap gap-3 justify-start">
-                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-gray-200 dark:bg-gray-800 text-black dark:text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
+        <main class="flex-1 flex flex-col lg:flex-row p-4 md:p-6 lg:p-8 gap-4 md:gap-6 lg:gap-8">
+            <div class="w-full lg:flex-1 flex flex-col gap-4">
+                <div class="bg-white dark:bg-gray-900 rounded-lg p-4 md:p-6 flex-1 flex flex-col shadow-lg">
+                    <h1 class="text-black dark:text-white text-xl md:text-2xl font-bold leading-tight pb-3">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span></h1>
+                    <p id="questionText" class="text-gray-800 dark:text-gray-300 text-base md:text-lg font-normal leading-normal pb-4"></p>
+                    <div id="optionsContainer" class="flex flex-col gap-3"></div>
+                    <div class="mt-auto pt-4 flex flex-col sm:flex-row flex-wrap gap-3 justify-start">
+                        <button id="prevBtn" class="flex-1 sm:flex-none sm:min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-gray-200 dark:bg-gray-800 text-black dark:text-white text-base font-bold leading-normal tracking-wide hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
                             <span class="truncate">Previous</span>
                         </button>
-                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-gray-200 dark:bg-gray-800 text-black dark:text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
+                        <button id="nextBtn" class="flex-1 sm:flex-none sm:min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-gray-200 dark:bg-gray-800 text-black dark:text-white text-base font-bold leading-normal tracking-wide hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
                             <span class="truncate">Next</span>
                         </button>
-                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-[#yellow-400]/20 text-yellow-600 dark:bg-[#yellow-500]/20 dark:text-yellow-400 text-base font-bold leading-normal tracking-[0.015em] border border-yellow-500 hover:bg-[#yellow-400]/30 dark:hover:bg-[#yellow-500]/30 transition-colors">
+                        <button id="markBtn" class="flex-1 sm:flex-none sm:min-w-[150px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300 text-base font-bold leading-normal tracking-wide border border-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-900/70 transition-colors">
                             <span class="truncate">Mark for Review</span>
                         </button>
-                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-[#primary]/90 transition-colors ml-auto">
+                        <button id="submitBtn" style="display:none;" class="flex-1 sm:flex-none sm:min-w-[150px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors sm:ml-auto">
                             <span class="truncate">Submit Test</span>
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="w-full lg:w-[280px] flex flex-col gap-5 flex-shrink-0">
-                <div class="bg-white dark:bg-[#black]/50 rounded-lg p-6 sticky top-5 right-5 shadow-lg flex flex-col gap-4">
-                    <h3 class="text-black dark:text-white text-xl font-bold mb-2">Scorecard</h3>
+            <div class="w-full lg:w-[320px] flex flex-col gap-4 flex-shrink-0">
+                <div class="bg-white dark:bg-gray-900 rounded-lg p-4 md:p-6 sticky top-4 shadow-lg flex flex-col gap-4">
+                    <h3 class="text-black dark:text-white text-xl font-bold mb-2">Quiz Summary</h3>
+                    <div id="questionGrid" class="grid grid-cols-5 md:grid-cols-6 lg:grid-cols-5 gap-2"></div>
                     <div class="space-y-3">
                         <div class="flex justify-between items-center text-sm fade-in">
                             <span class="text-gray-600 dark:text-gray-400">Total Questions:</span>
-                            <span class="font-semibold text-black dark:text-white text-lg">100</span>
+                            <span id="summaryTotal" class="font-semibold text-black dark:text-white text-lg">0</span>
                         </div>
                         <div class="flex justify-between items-center text-sm fade-in">
                             <span class="text-gray-600 dark:text-gray-400">Attempted:</span>
-                            <span class="font-semibold text-green-600 dark:text-green-400 text-lg animate-correct">10</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm fade-in">
-                            <span class="text-gray-600 dark:text-gray-400">Correct:</span>
-                            <span class="font-semibold text-green-600 dark:text-green-400 text-lg animate-correct">8</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm fade-in">
-                            <span class="text-gray-600 dark:text-gray-400">Incorrect:</span>
-                            <span class="font-semibold text-red-600 dark:text-red-400 text-lg animate-incorrect">2</span>
+                            <span id="summaryAttempted" class="font-semibold text-green-600 dark:text-green-400 text-lg animate-correct">0</span>
                         </div>
                         <div class="flex justify-between items-center text-sm fade-in">
                             <span class="text-gray-600 dark:text-gray-400">Skipped:</span>
-                            <span class="font-semibold text-gray-500 dark:text-gray-400 text-lg">90</span>
+                            <span id="summarySkipped" class="font-semibold text-gray-500 dark:text-gray-400 text-lg">0</span>
                         </div>
                         <div class="flex justify-between items-center text-sm fade-in">
                             <span class="text-gray-600 dark:text-gray-400">Marked for Review:</span>
-                            <span class="font-semibold text-yellow-600 dark:text-yellow-400 text-lg">5</span>
+                            <span id="summaryMarked" class="font-semibold text-yellow-600 dark:text-yellow-400 text-lg">0</span>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
+    <script src="aiQuiz.js"></script>
+    <script src="script.js"></script>
 </body></html>

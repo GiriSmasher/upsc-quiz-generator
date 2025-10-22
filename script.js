@@ -20,6 +20,8 @@ if (themeToggle) {
 const uploadArea = document.getElementById('uploadArea');
 const pdfInput = document.getElementById('pdfInput');
 const loadingContainer = document.getElementById('loadingContainer');
+const errorContainer = document.getElementById('errorContainer');
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 if (uploadArea && pdfInput) {
     // Click to upload
@@ -42,21 +44,38 @@ if (uploadArea && pdfInput) {
         e.preventDefault();
         uploadArea.classList.remove('dragging');
         const file = e.dataTransfer.files[0];
-        if (file && file.type === 'application/pdf') {
-            processPDF(file);
-        } else {
-            alert('Please upload a valid PDF file');
-        }
+        handleFile(file);
     });
 }
 
 function handleFileSelect(e) {
     const file = e.target.files[0];
-    if (file && file.type === 'application/pdf') {
-        processPDF(file);
-    } else {
-        alert('Please upload a valid PDF file');
+    handleFile(file);
+}
+
+function handleFile(file) {
+    if (!file) {
+        return;
     }
+
+    if (file.type !== 'application/pdf') {
+        showError('Please upload a valid PDF file.');
+        return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+        showError('File too large. Please upload a PDF smaller than 10MB.');
+        return;
+    }
+
+    processPDF(file);
+}
+
+function showError(message) {
+    errorContainer.textContent = message;
+    errorContainer.style.display = 'block';
+    uploadArea.style.display = 'block';
+    loadingContainer.style.display = 'none';
 }
 
 async function processPDF(file) {
@@ -64,9 +83,25 @@ async function processPDF(file) {
     loadingContainer.style.display = 'block';
     
     try {
-        // Extract text from PDF using PDF.js
-        const text = await extractPDFText(file);
+        let text;
+        try {
+            // Attempt to extract text with PDF.js
+            text = await extractPDFText(file);
+        } catch (pdfJsError) {
+            console.warn('PDF.js failed, falling back to OCR:', pdfJsError);
+            text = ''; // Ensure text is empty to trigger OCR
+        }
+
+        // If PDF.js returns little or no text, try OCR
+        if (text.trim().length < 100) {
+            text = await extractPDFTextWithOCR(file);
+        }
         
+        // If OCR also fails to find text
+        if (text.trim().length < 100) {
+            throw new Error('No text detected');
+        }
+
         // Generate quiz from extracted text
         const quiz = await generateQuizFromPDF(text);
         
@@ -77,10 +112,40 @@ async function processPDF(file) {
         window.location.href = 'quiz.html';
     } catch (error) {
         console.error('Error processing PDF:', error);
-        alert('Error processing PDF. Please try again.');
-        uploadArea.style.display = 'block';
-        loadingContainer.style.display = 'none';
+        if (error.message.includes('No text detected')) {
+            showError('No text detected in the PDF. Please upload a text-based PDF.');
+        } else if (error.message.includes('Invalid quiz data')) {
+            showError('AI quiz generation failed. Please try again with a different PDF.');
+        } else if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+            showError('Network error. Please check your internet connection and try again.');
+        } else {
+            showError('An unexpected error occurred. Please try again.');
+        }
     }
+}
+
+async function extractPDFTextWithOCR(file) {
+    const ocrProgress = document.getElementById('ocr-progress');
+    const loadingText = document.querySelector('#loadingContainer p');
+    loadingText.textContent = 'Performing OCR... this may take a moment.';
+    ocrProgress.style.width = '0%';
+
+    const { data: { text } } = await Tesseract.recognize(
+        file,
+        'eng',
+        {
+            logger: m => {
+                if (m.status === 'recognizing text') {
+                    const progress = m.progress * 100;
+                    ocrProgress.style.width = `${progress}%`;
+                    if (progress === 100) {
+                        loadingText.textContent = 'Processing complete!';
+                    }
+                }
+            }
+        }
+    );
+    return text;
 }
 
 async function extractPDFText(file) {
@@ -133,9 +198,20 @@ function initializeQuiz() {
     }
     
     quizData = JSON.parse(storedQuiz);
-    userAnswers = new Array(quizData.length).fill(null);
-    markedQuestions = new Array(quizData.length).fill(false);
-    startTime = Date.now();
+
+    // Load saved state or initialize new state
+    const savedState = JSON.parse(localStorage.getItem('quizState'));
+    if (savedState) {
+        userAnswers = savedState.answers;
+        markedQuestions = savedState.marked;
+        timeRemaining = savedState.timer;
+        currentQuestionIndex = savedState.currentQuestion;
+    } else {
+        userAnswers = new Array(quizData.length).fill(null);
+        markedQuestions = new Array(quizData.length).fill(false);
+    }
+
+    startTime = Date.now() - ((30 * 60) - timeRemaining) * 1000;
     
     // Initialize UI
     displayQuestion();
@@ -179,6 +255,7 @@ function displayQuestion() {
 function selectOption(index) {
     userAnswers[currentQuestionIndex] = index;
     document.querySelectorAll('.option input')[index].checked = true;
+    saveQuizState();
     updateSummary();
     updateQuestionGrid();
 }
@@ -187,6 +264,7 @@ function previousQuestion() {
     if (currentQuestionIndex > 0) {
         currentQuestionIndex--;
         displayQuestion();
+        saveQuizState();
     }
 }
 
@@ -194,13 +272,25 @@ function nextQuestion() {
     if (currentQuestionIndex < quizData.length - 1) {
         currentQuestionIndex++;
         displayQuestion();
+        saveQuizState();
     }
 }
 
 function markForReview() {
     markedQuestions[currentQuestionIndex] = !markedQuestions[currentQuestionIndex];
+    saveQuizState();
     updateSummary();
     updateQuestionGrid();
+}
+
+function saveQuizState() {
+    const state = {
+        answers: userAnswers,
+        marked: markedQuestions,
+        timer: timeRemaining,
+        currentQuestion: currentQuestionIndex,
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
 }
 
 function generateQuestionGrid() {
@@ -252,6 +342,8 @@ function startTimer() {
         document.getElementById('timerDisplay').textContent = 
             `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         
+        saveQuizState();
+
         if (timeRemaining <= 0) {
             clearInterval(timerInterval);
             submitQuiz();
@@ -271,6 +363,8 @@ function submitQuiz() {
     };
     
     localStorage.setItem('quizResults', JSON.stringify(results));
+    localStorage.removeItem('quizState');
+    localStorage.removeItem('currentQuiz');
     window.location.href = 'result.html';
 }
 
